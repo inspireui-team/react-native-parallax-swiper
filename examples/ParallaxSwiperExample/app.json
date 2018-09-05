@@ -1,4 +1,25 @@
 {
-  "name": "ParallaxSwiperExample",
-  "displayName": "ParallaxSwiperExample"
+  "expo": {
+    "name": "freebies/ParallaxSwiper",
+    "description": "Animated parallax swiper image",
+    "slug": "freebiesparallaxswiper",
+    "privacy": "unlisted",
+    "sdkVersion": "29.0.0",
+    "version": "1.0.2",
+    "orientation": "portrait",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "primaryColor": "#1E1E1E",
+    "splash": {
+      "resizeMode": "cover",
+      "backgroundColor": "#333540"
+    },
+    "updates": {
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    },
+    "githubUrl": "https://github.com/zachgibson/react-native-parallax-swiper"
+  }
 }

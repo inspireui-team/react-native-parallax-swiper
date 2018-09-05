@@ -1,35 +1,33 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Dimensions,
   Image,
-  Animated,
-} from 'react-native';
-
+  Animated
+} from "react-native";
+import { Video, BlurView } from "expo";
 import {
   ParallaxSwiper,
-  ParallaxSwiperPage,
-} from 'react-native-parallax-swiper';
-import Video from 'react-native-video';
-import { BlurView } from 'react-native-blur';
+  ParallaxSwiperPage
+} from "react-native-parallax-swiper";
 
-import data from './data';
+import data from "./data";
 
-const { width: deviceWidth, height: deviceHeight } = Dimensions.get('window');
+const { width: deviceWidth, height: deviceHeight } = Dimensions.get("window");
 
-const homeIcon = require('./assets/home.png');
-const searchIcon = require('./assets/search.png');
-const messagesIcon = require('./assets/messages.png');
-const profileIcon = require('./assets/profile.png');
+const homeIcon = require("./assets/home.png");
+const searchIcon = require("./assets/search.png");
+const messagesIcon = require("./assets/messages.png");
+const profileIcon = require("./assets/profile.png");
 
 export default class extends Component {
   componentDidMount() {
     this.playAnimation(0);
   }
 
-  playAnimation = (activeIndex) => {
+  playAnimation = activeIndex => {
     if (this.previousPageIndex === activeIndex) {
       return;
     }
@@ -43,23 +41,23 @@ export default class extends Component {
 
     Animated.spring(this.playButtonAnim8Val[activeIndex], {
       toValue: 1,
-      useNativeDriver: true,
+      useNativeDriver: true
     }).start();
 
     setTimeout(() => {
       Animated.stagger(50, [
         Animated.spring(this.artistNameAnim8Val[activeIndex], {
           toValue: 1,
-          useNativeDriver: true,
+          useNativeDriver: true
         }),
         Animated.spring(this.songNameAnim8Val[activeIndex], {
           toValue: 1,
-          useNativeDriver: true,
+          useNativeDriver: true
         }),
         Animated.spring(this.songLikesAnim8Val[activeIndex], {
           toValue: 1,
-          useNativeDriver: true,
-        }),
+          useNativeDriver: true
+        })
       ]).start();
     }, 250);
 
@@ -83,18 +81,20 @@ export default class extends Component {
           <ParallaxSwiper
             speed={0.5}
             vertical
-            onMomentumScrollEnd={(activeIndex) => {
+            onMomentumScrollEnd={activeIndex => {
               this.playAnimation(activeIndex);
             }}
             animatedValue={this.myCustomAnimatedVal}
           >
-            {data.map((song, i) =>
-              (<ParallaxSwiperPage
+            {data.map((song, i) => (
+              <ParallaxSwiperPage
                 key={song.id}
                 BackgroundComponent={
                   <View>
                     <Video
                       source={{ uri: song.media }}
+                      shouldPlay
+                      isLooping
                       rate={1.0}
                       volume={0.0}
                       muted={false}
@@ -105,7 +105,7 @@ export default class extends Component {
                     />
                     <Animated.View
                       style={{
-                        position: 'absolute',
+                        position: "absolute",
                         width: deviceWidth,
                         height: deviceHeight - 50,
                         opacity: this.myCustomAnimatedVal.interpolate({
@@ -113,11 +113,11 @@ export default class extends Component {
                             (i - 1) * (deviceHeight - 50),
                             i * (deviceHeight - 50),
                             (i + 1) * (deviceHeight - 50) -
-                              (deviceHeight - (50 + 120)),
+                              (deviceHeight - (50 + 120))
                           ],
                           outputRange: [1, 0, 1],
-                          extrapolate: 'clamp',
-                        }),
+                          extrapolate: "clamp"
+                        })
                       }}
                     >
                       <BlurView
@@ -129,7 +129,7 @@ export default class extends Component {
                     <View
                       style={{
                         ...StyleSheet.absoluteFillObject,
-                        backgroundColor: 'rgba(0,0,0,0.25)',
+                        backgroundColor: "rgba(0,0,0,0.25)"
                       }}
                     />
                   </View>
@@ -143,9 +143,9 @@ export default class extends Component {
                           (i - 1) * (deviceHeight - 50),
                           i * (deviceHeight - 50),
                           (i + 1) * (deviceHeight - 50) -
-                            (deviceHeight - (50 + deviceHeight * 0.25)),
+                            (deviceHeight - (50 + deviceHeight * 0.25))
                         ],
-                        outputRange: [0, 1, 0],
+                        outputRange: [0, 1, 0]
                       }),
                       transform: [
                         {
@@ -153,16 +153,16 @@ export default class extends Component {
                             inputRange: [
                               (i - 1) * (deviceHeight - 50),
                               i * (deviceHeight - 50),
-                              (i + 1) * (deviceHeight - 50),
+                              (i + 1) * (deviceHeight - 50)
                             ],
                             outputRange: [
                               deviceHeight - 50 - 80,
                               0,
-                              deviceHeight - 50 - 80,
-                            ],
-                          }),
-                        },
-                      ],
+                              deviceHeight - 50 - 80
+                            ]
+                          })
+                        }
+                      ]
                     }}
                   >
                     <View
@@ -170,9 +170,9 @@ export default class extends Component {
                       renderToHardwareTextureAndroid
                       style={{
                         flex: 1,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginTop: 50,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: 50
                       }}
                     >
                       <Animated.Image
@@ -180,17 +180,17 @@ export default class extends Component {
                           marginBottom: 24,
                           transform: [
                             {
-                              scale: this.playButtonAnim8Val[i],
-                            },
-                          ],
+                              scale: this.playButtonAnim8Val[i]
+                            }
+                          ]
                         }}
-                        source={require('./assets/play.png')}
+                        source={require("./assets/play.png")}
                       />
                       <Animated.View
                         style={{
                           opacity: this.artistNameAnim8Val[i].interpolate({
                             inputRange: [0, 1],
-                            outputRange: [0, 1],
+                            outputRange: [0, 1]
                           }),
                           transform: [
                             {
@@ -198,20 +198,20 @@ export default class extends Component {
                                 i
                               ].interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [40, 0],
-                              }),
-                            },
-                          ],
+                                outputRange: [40, 0]
+                              })
+                            }
+                          ]
                         }}
                       >
                         <Text
                           style={{
                             marginBottom: 4,
                             fontSize: 24,
-                            fontWeight: '800',
+                            fontWeight: "800",
                             letterSpacing: 0.4,
-                            color: 'white',
-                            backgroundColor: 'transparent',
+                            color: "white",
+                            backgroundColor: "transparent"
                           }}
                         >
                           {song.artistName.toUpperCase()}
@@ -221,24 +221,24 @@ export default class extends Component {
                         style={{
                           opacity: this.songNameAnim8Val[i].interpolate({
                             inputRange: [0, 1],
-                            outputRange: [0, 1],
+                            outputRange: [0, 1]
                           }),
                           transform: [
                             {
                               translateY: this.songNameAnim8Val[i].interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [40, 0],
-                              }),
-                            },
-                          ],
+                                outputRange: [40, 0]
+                              })
+                            }
+                          ]
                         }}
                       >
                         <Text
                           style={{
                             marginBottom: 16,
                             fontSize: 20,
-                            color: 'white',
-                            backgroundColor: 'transparent',
+                            color: "white",
+                            backgroundColor: "transparent"
                           }}
                         >
                           {song.name}
@@ -246,33 +246,33 @@ export default class extends Component {
                       </Animated.View>
                       <Animated.View
                         style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
+                          flexDirection: "row",
+                          alignItems: "center",
                           opacity: this.songLikesAnim8Val[i].interpolate({
                             inputRange: [0, 1],
-                            outputRange: [0, 1],
+                            outputRange: [0, 1]
                           }),
                           transform: [
                             {
-                              translateY: this.songLikesAnim8Val[
-                                i
-                              ].interpolate({
-                                inputRange: [0, 1],
-                                outputRange: [40, 0],
-                              }),
-                            },
-                          ],
+                              translateY: this.songLikesAnim8Val[i].interpolate(
+                                {
+                                  inputRange: [0, 1],
+                                  outputRange: [40, 0]
+                                }
+                              )
+                            }
+                          ]
                         }}
                       >
                         <Image
                           style={{ marginRight: 8 }}
-                          source={require('./assets/heart.png')}
+                          source={require("./assets/heart.png")}
                         />
                         <Text
                           style={{
                             fontSize: 13,
-                            color: 'white',
-                            backgroundColor: 'transparent',
+                            color: "white",
+                            backgroundColor: "transparent"
                           }}
                         >
                           {song.likeCount}
@@ -281,16 +281,16 @@ export default class extends Component {
                     </View>
                   </Animated.View>
                 }
-              />),
-            )}
+              />
+            ))}
           </ParallaxSwiper>
         </View>
         <View
-          style={{ flexDirection: 'row', height: 50, backgroundColor: 'black' }}
+          style={{ flexDirection: "row", height: 50, backgroundColor: "black" }}
         >
           <View style={styles.tabBarIconContainer}>
             <Image
-              style={[styles.tabBarIcon, { tintColor: 'white' }]}
+              style={[styles.tabBarIcon, { tintColor: "white" }]}
               source={homeIcon}
             />
           </View>
@@ -312,10 +312,10 @@ export default class extends Component {
 const styles = StyleSheet.create({
   tabBarIconContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center"
   },
   tabBarIcon: {
-    tintColor: '#999',
-  },
+    tintColor: "#999"
+  }
 });

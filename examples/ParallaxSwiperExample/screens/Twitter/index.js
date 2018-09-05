@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
@@ -6,43 +6,42 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
-  Animated,
-} from 'react-native';
-
+  Animated
+} from "react-native";
+import { LinearGradient } from "expo";
 import {
   ParallaxSwiper,
-  ParallaxSwiperPage,
-} from 'react-native-parallax-swiper';
-import LinearGradient from 'react-native-linear-gradient';
+  ParallaxSwiperPage
+} from "react-native-parallax-swiper";
 
-import data from './data';
+import data from "./data";
 
-const smallRetweetIcon = require('./assets/retweet.png');
-const smallHeartIcon = require('./assets/heart-small.png');
-const smallEllipsesIcon = require('./assets/ellipses.png');
-const xIcon = require('./assets/x.png');
-const heartIcon = require('./assets/heart-big.png');
-const shareIcon = require('./assets/share.png');
+const smallRetweetIcon = require("./assets/retweet.png");
+const smallHeartIcon = require("./assets/heart-small.png");
+const smallEllipsesIcon = require("./assets/ellipses.png");
+const xIcon = require("./assets/x.png");
+const heartIcon = require("./assets/heart-big.png");
+const shareIcon = require("./assets/share.png");
 
-const { width: deviceWidth, height: deviceHeight } = Dimensions.get('window');
+const { width: deviceWidth, height: deviceHeight } = Dimensions.get("window");
 const myAnimatedValue = new Animated.Value(0);
 
-export default ({ navigation }) =>
-  (<View>
+export default ({ navigation }) => (
+  <View>
     <ParallaxSwiper
       speed={0.75}
       dividerWidth={6}
       dividerColor="black"
       animatedValue={myAnimatedValue}
     >
-      {data.map(tweet =>
-        (<ParallaxSwiperPage
+      {data.map(tweet => (
+        <ParallaxSwiperPage
           key={tweet.id}
           BackgroundComponent={
             <Image
               style={styles.image}
               source={{
-                uri: tweet.media,
+                uri: tweet.media
               }}
             />
           }
@@ -50,20 +49,14 @@ export default ({ navigation }) =>
             <View style={styles.innerContainer}>
               <LinearGradient
                 style={styles.gradient}
-                colors={['transparent', 'black']}
+                colors={["transparent", "black"]}
               >
                 <View style={styles.twitterNameAndHandleContainer}>
-                  <Text style={styles.twitterName}>
-                    {tweet.userName}
-                  </Text>
-                  <Text style={styles.twitterHandle}>
-                    {tweet.userHandle}
-                  </Text>
+                  <Text style={styles.twitterName}>{tweet.userName}</Text>
+                  <Text style={styles.twitterHandle}>{tweet.userHandle}</Text>
                 </View>
                 <View style={styles.tweetTextContainer}>
-                  <Text style={styles.tweetText}>
-                    {tweet.text}
-                  </Text>
+                  <Text style={styles.tweetText}>{tweet.text}</Text>
                 </View>
                 <View style={styles.smallButtonsContainer}>
                   <View style={styles.bottomIconsContainer}>
@@ -71,7 +64,7 @@ export default ({ navigation }) =>
                       <View
                         style={[
                           styles.smallButtonContainer,
-                          styles.smallButtonWithTextIconContainer,
+                          styles.smallButtonWithTextIconContainer
                         ]}
                       >
                         <Image style={styles.icon} source={smallRetweetIcon} />
@@ -84,14 +77,12 @@ export default ({ navigation }) =>
                       <View
                         style={[
                           styles.smallButtonContainer,
-                          styles.smallButtonWithTextIconContainer,
+                          styles.smallButtonWithTextIconContainer
                         ]}
                       >
                         <Image style={styles.icon} source={smallHeartIcon} />
                       </View>
-                      <Text style={styles.buttonText}>
-                        {tweet.likeCount}
-                      </Text>
+                      <Text style={styles.buttonText}>{tweet.likeCount}</Text>
                     </View>
                   </View>
                   <Image style={styles.icon} source={smallEllipsesIcon} />
@@ -99,8 +90,8 @@ export default ({ navigation }) =>
               </LinearGradient>
             </View>
           }
-        />),
-      )}
+        />
+      ))}
     </ParallaxSwiper>
     <TouchableOpacity
       onPress={() => {
@@ -126,105 +117,106 @@ export default ({ navigation }) =>
                 translateX: myAnimatedValue.interpolate({
                   inputRange: [0, (deviceWidth + 6) * (data.length - 1)],
                   outputRange: [-deviceWidth, 0],
-                  extrapolate: 'clamp',
-                }),
-              },
-            ],
-          },
+                  extrapolate: "clamp"
+                })
+              }
+            ]
+          }
         ]}
       />
     </View>
-  </View>);
+  </View>
+);
 
 const styles = StyleSheet.create({
   innerContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end"
   },
   image: {
     width: deviceWidth,
-    height: deviceHeight,
+    height: deviceHeight
   },
   gradient: {
     paddingHorizontal: 12,
     paddingVertical: 24,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent"
   },
   twitterNameAndHandleContainer: {
-    flexDirection: 'row',
-    marginBottom: 4,
+    flexDirection: "row",
+    marginBottom: 4
   },
   twitterName: {
     marginRight: 4,
     fontSize: 16,
-    fontWeight: '600',
-    color: 'white',
+    fontWeight: "600",
+    color: "white"
   },
   twitterHandle: {
     fontSize: 16,
-    color: 'white',
+    color: "white"
   },
   tweetTextContainer: {
-    marginBottom: 12,
+    marginBottom: 12
   },
   tweetText: {
     fontSize: 16,
-    color: 'white',
+    color: "white"
   },
   buttonWithTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 24,
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 24
   },
   bottomIconsContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row"
   },
   icon: {
-    tintColor: 'white',
+    tintColor: "white"
   },
   buttonText: {
     fontSize: 12,
-    fontWeight: '600',
-    color: 'rgba(255,255,255,0.5)',
+    fontWeight: "600",
+    color: "rgba(255,255,255,0.5)"
   },
   smallButtonsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 8
   },
   smallButtonContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     width: 24,
     height: 24,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    borderRadius: 12,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    borderRadius: 12
   },
   smallButtonWithTextIconContainer: {
-    marginRight: 12,
+    marginRight: 12
   },
   largeButtonContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
     top: 12,
     width: 32,
     height: 32,
-    backgroundColor: 'rgba(0,0,0,0.25)',
-    borderRadius: 16,
+    backgroundColor: "rgba(0,0,0,0.25)",
+    borderRadius: 16
   },
   progressBarContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
     height: 4,
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: "rgba(255,255,255,0.2)"
   },
   progressBar: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'white',
-  },
+    backgroundColor: "white"
+  }
 });
